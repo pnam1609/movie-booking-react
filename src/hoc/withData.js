@@ -1,6 +1,6 @@
-import { Modal } from 'antd';
+import { Spin } from 'antd';
 import React from 'react'
-import FadingDots from "react-cssfx-loading/lib/FadingDots";
+import style from './withData.module.css';
 import callApi from '../apis/callApi'
 
 function WithData(WarappedComponent, url) {
@@ -20,21 +20,18 @@ function WithData(WarappedComponent, url) {
             (async () => {
                 const res = await callApi(url)
                 const data = res.data
-                setTimeout(() => {
-                    this.setState({ data })
-                }, 3000);
+                this.setState({ data })
             })()
         }
 
-        //<Modal title="Basic Modal" visible={true} >
-        //         <div style={{ display: 'flex', justifyContent: 'center', alignItems: "center", height: '100%' }}>
-        //         <FadingDots color="#FF0000" width="100px" height="100px" duration="0.5s" />
-        //     </div>
-        // </Modal>
+
         render() {
             if (this.state.data.length === 0) {
-                return
-
+                return <div className={style.example} >
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Spin size={"large"} />
+                    </div>
+                </div>
             }
             return <WarappedComponent data={this.state.data} {...this.props} />
         }

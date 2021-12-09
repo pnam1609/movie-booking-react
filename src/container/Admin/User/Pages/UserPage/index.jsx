@@ -6,27 +6,30 @@ import './style.css'
 
 // import { Layout, Breadcrumb } from 'antd';
 
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Col, Row } from 'antd';
 
-const { Content,  } = Layout;
+const { Content, } = Layout;
 
 
 function UserPage() {
     return (
-        <Layout style={{height: "100vh"}}>
-            <TopBar />
-            <Content style={{ padding: '0 50px' }}>
-                <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb>
-                <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-                    <SideBar />
-                    {/* <Content style={{ padding: '0 24px', minHeight: 280 }}>Content</Content> */}
-                    <UserList />
-                </Layout>
-            </Content>
+        <Layout style={{ height: "100vh" }}>
+            <Col span={4} >
+                <SideBar />
+            </Col>
+            <Col span={20}>
+                <Row justify="end">
+                    <TopBar />
+                </Row>
+                <Row>
+                    <Content style={{ paddingRight: "30px", backgroundColor: "white", float: "right" }}>
+                        <Layout className="site-layout-background">
+                            {/* <Content style={{ padding: '0 24px', minHeight: 280 }}>Content</Content> */}
+                            <UserList />
+                        </Layout>
+                    </Content>
+                </Row>
+            </Col>
         </Layout>
     )
 }
