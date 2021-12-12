@@ -1,0 +1,8 @@
+.modalStyle .ant-modal-body {
+  height: 500px;
+  padding: 0;
+}
+
+.modalStyle .ant-modal-footer {
+  display: none;
+}
