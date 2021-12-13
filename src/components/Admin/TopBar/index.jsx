@@ -1,31 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Dropdown, Layout, Menu, message, Row } from 'antd';
 import { DownOutlined, LogoutOutlined, NotificationOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
-
-
 function TopBar() {
+    const [dataUser, setDataUser] = useState({})
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem('userInfo'))
+        if(!data){
+            navigate("/sign-in")
+        }
+        setDataUser(data)
+    }, [])
+    const handleClick = e => {
+        if (e.key === '3') {
+            localStorage.removeItem('userInfo')
+            navigate("/sign-in")
+        }
+    }
 
     const menu = (
-        <Menu onClick={handleMenuClick}>
+        <Menu onClick={handleClick}>
             <Menu.Item key="1" icon={<UserOutlined />}>
                 Tài khoản
             </Menu.Item>
             <Menu.Item key="2" icon={<SwapOutlined />}>
                 Đổi mật khẩu
             </Menu.Item>
-            <Menu.Item key="3" icon={<LogoutOutlined />}>
+            <Menu.Item key="3" onClick={console.log(11111111)} icon={<LogoutOutlined />}>
                 Đăng xuất
             </Menu.Item>
         </Menu>
     );
-
-    function handleMenuClick(e) {
-        message.info('Click on menu item.');
-        console.log('click', e);
-    }
 
 
     return (
@@ -36,7 +46,7 @@ function TopBar() {
                 </Button>
                 <Dropdown overlay={menu}>
                     <Button style={{ border: "none" }}>
-                        Hoàng Phương Nam <DownOutlined />
+                        {dataUser.hoTen} <DownOutlined />
                     </Button>
                 </Dropdown>
             </Row>

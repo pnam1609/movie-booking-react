@@ -1,116 +1,69 @@
 import React, { useState } from 'react'
-import { Layout } from 'antd';
+import { Button, Layout, Space } from 'antd';
 import withData from '../../../../../hoc/withData'
 import { Table } from 'antd';
+import Search from 'antd/lib/input/Search';
+import { DeleteOutlined, EditOutlined, UserAddOutlined } from '@ant-design/icons/lib/icons';
+import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        age: 32,
-        address: 'London No. 2 Lake Park',
-    },
-];
+function UserList({ data }) {
+    const [backUpDate] = useState(data)// giữ lại data lúc đầu
+    const [userList, setUserList] = useState(data)
 
-function UserList() {//{ data }
-
-    const [state, setState] = useState({
-        filteredInfo: {},
-        sortedInfo: {},
-    })
-
-    const handleChange = (pagination, filters, sorter) => {
-        console.log('Various parameters', pagination, filters, sorter);
-        setState({
-            filteredInfo: filters,
-            sortedInfo: sorter,
-        });
-    };
-
-    const clearFilters = () => {
-        setState({ ...state, filteredInfo: null });
-    };
-
-    const clearAll = () => {
-        setState({
-            filteredInfo: null,
-            sortedInfo: null,
-        });
-    };
-
-    const setAgeSort = () => {
-        setState({
-            ...state,
-            sortedInfo: {
-                order: 'descend',
-                columnKey: 'age',
-            },
-        });
-    };
-    console.log(data);
+    const handleSearch = value => {
+        setUserList(() => {
+            const result = backUpDate.filter(params => {
+                return params.taiKhoan.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                    params.hoTen.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                    params.email.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                    params.soDt.toLowerCase().indexOf(value.toLowerCase()) !== -1
+            })
+            return result
+        })
+    }
 
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            filters: [
-                { text: 'Joe', value: 'Joe' },
-                { text: 'Jim', value: 'Jim' },
-            ],
-            filteredValue: state.filteredInfo.name || null,
-            onFilter: (value, record) => record.name.includes(value),
-            sorter: (a, b) => a.name.length - b.name.length,
-            sortOrder: state.sortedInfo.columnKey === 'name' && state.sortedInfo.order,
-            ellipsis: true,
+            title: "Tên tài khoản",
+            dataIndex: 'taiKhoan'
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-            sorter: (a, b) => a.age - b.age,
-            sortOrder: state.sortedInfo.columnKey === 'age' && state.sortedInfo.order,
-            ellipsis: true,
+            title: "Họ và tên",
+            dataIndex: 'hoTen'
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-            filters: [
-                { text: 'London', value: 'London' },
-                { text: 'New York', value: 'New York' },
-            ],
-            filteredValue: state.filteredInfo.address || null,
-            onFilter: (value, record) => record.address.includes(value),
-            sorter: (a, b) => a.address.length - b.address.length,
-            sortOrder: state.sortedInfo.columnKey === 'address' && state.sortedInfo.order,
-            ellipsis: true,
+            title: "Email",
+            dataIndex: 'email',
         },
-    ];
+        {
+            title: "Số điện thoại",
+            dataIndex: 'soDt',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    <Button icon={<EditOutlined />}><Link to={`/admin/user/${record.taiKhoan}`} /></Button>
+                    <Button icon={<DeleteOutlined />}></Button>
+                </Space>
+            ),
+        }
+    ]
     return (
-        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+        <Content className="site-layout" style={{ padding: '0 50px 40px 50px', marginTop: 64 }}>
+            <h1 style={{ textAlign: 'center' }}>Quản lý User</h1>
+            <div style={{ display: 'flex', justifyContent: 'end', marginBottom: "15px" }}>
+                <Button type="primary" shape="round" icon={<UserAddOutlined />} size={"large"} >Thêm</Button>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'end', marginBottom: "20px" }}>
+                <Search placeholder="Type keyword ..." onSearch={(e) => handleSearch(e)}
+                    style={{ width: 400 }} size='large' />
+            </div>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-                <Table columns={columns} dataSource={data} onChange={handleChange} />
+                <Table columns={columns} dataSource={userList} rowKey={"taiKhoan"}/>
             </div>
         </Content>
     )

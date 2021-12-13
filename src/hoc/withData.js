@@ -3,7 +3,7 @@ import React from 'react'
 import style from './withData.module.css';
 import callApi from '../apis/callApi'
 
-function WithData(WarappedComponent, url) {
+function WithData(WarappedComponent, url, method, body, token) {
     return class extends React.Component {
         constructor(props) {
             super(props)
@@ -18,8 +18,11 @@ function WithData(WarappedComponent, url) {
 
         componentDidMount() {
             (async () => {
-                const res = await callApi(url)
+                const res = await callApi(url, method, body, token)
                 const data = res.data
+                setTimeout(() => {
+
+                }, 3000);
                 this.setState({ data })
             })()
         }

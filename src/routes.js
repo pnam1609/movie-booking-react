@@ -1,19 +1,27 @@
 
 import SignIn from './components/Common/SignIn'
 import NotFound from './components/Common/NotFound'
-import Admin from './container/Admin/User/Pages/UserPage'
+import SignUp from './components/Client/SignUp'
+import Admin from './container/Admin'
 
-const routes = [
+
+export const adminRoutes = [
+    {
+        path: "/admin/*",
+        exact: false,
+        element: < Admin />
+    },
     {
         path: "/sign-in",
         exact: true,
         element: < SignIn />
     },
     {
-        path: "/admin",
+        path: "/sign-up",
         exact: true,
-        element: < Admin />
+        element: < SignUp />
     },
+    
     {
         path: "*",
         exact: false,
@@ -21,4 +29,25 @@ const routes = [
     }
 ]
 
-export default routes
+// export const routesPrivate = [
+//     {
+//         path: "/sign-in",
+//         exact: true,
+//         element: < SignIn />
+//     },
+//     {
+//         path: "/sign-up",
+//         exact: true,
+//         element: < SignUp />
+//     },
+//     {
+//         path: "/admin",
+//         exact: true,
+//         element: < Admin />
+//     },
+//     {
+//         path: "*",
+//         exact: false,
+//         element: < NotFound />
+//     }
+// ]
