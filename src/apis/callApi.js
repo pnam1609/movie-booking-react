@@ -6,8 +6,8 @@ export default function callApi(endpoint, method = 'GET', body, token = null) {
         method,
         url: `${Config.API_URL}/${endpoint}`,
         data: body,
-        headers : {
-            Authorization: token
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     }).catch(err => {
         return err

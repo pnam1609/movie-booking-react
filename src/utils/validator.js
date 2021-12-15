@@ -15,6 +15,15 @@ export const isEmail = () => {
     }
 }
 
+export const isUsername = () => {
+    return {
+        checkValidate: (value) => {
+            const re = /^[a-zA-Z0-9]+$/;
+            return re.test(value) ? undefined : "The field must be username"
+        }
+    }
+}
+
 export const isPhoneNumber = () => {
     return {
         checkValidate: (value) => {
@@ -50,14 +59,17 @@ export const minLength = (min) => {
     }
 }
 
+
 export const validateOneElement = (target, rules) => {
     for (let i = 0; i < rules.length; i++) {
         const res = rules[i].checkValidate(target.value)
         if (res) {
-            target.parentElement.classList.add("invalid")
+            // target.classList.add("invalid")
+            target.style.borderColor = 'red'
             return res
         }
     }
-    target.parentElement.classList.remove("invalid")
+    // target.classList.remove("invalid")
+    target.style.borderColor = '#d9d9d9'
 }
 

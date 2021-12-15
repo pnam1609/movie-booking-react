@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Dropdown, Layout, Menu, message, Row } from 'antd';
+import { Button, Dropdown, Layout, Menu, Row } from 'antd';
 import { DownOutlined, LogoutOutlined, NotificationOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ function TopBar() {
             navigate("/sign-in")
         }
         setDataUser(data)
+        // eslint-disable-next-line
     }, [])
     const handleClick = e => {
         if (e.key === '3') {
@@ -31,7 +32,7 @@ function TopBar() {
             <Menu.Item key="2" icon={<SwapOutlined />}>
                 Đổi mật khẩu
             </Menu.Item>
-            <Menu.Item key="3" onClick={console.log(11111111)} icon={<LogoutOutlined />}>
+            <Menu.Item key="3" icon={<LogoutOutlined />}>
                 Đăng xuất
             </Menu.Item>
         </Menu>
