@@ -9,7 +9,7 @@ function RightMenu() {
         <li className="nav-item nav-link active">Movies</li>
         <li className="nav-item nav-link">Theater</li>
         <li className="nav-item nav-link">Reviews</li>
-        <li className="nav-item nav-link">contact</li>
+        <a href='#contact'><li className="nav-item nav-link">contact</li></a>
         <a className="ml-md-3" href="/">
           <button className="btn-grad">
             LOGIN

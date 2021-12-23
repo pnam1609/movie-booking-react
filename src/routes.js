@@ -3,9 +3,10 @@ import SignIn from './components/Common/SignIn'
 import NotFound from './components/Common/NotFound'
 import SignUp from './components/Client/SignUp'
 import Admin from './container/Admin'
+import Home from './container/Client/Home/Home'
 
 
-export const adminRoutes = [
+export const routes = [
     {
         path: "/admin/*",
         exact: false,
@@ -21,7 +22,11 @@ export const adminRoutes = [
         exact: true,
         element: < SignUp />
     },
-    
+    {
+        path: "/",
+        exact: true,
+        element: < Home />
+    },
     {
         path: "*",
         exact: false,
